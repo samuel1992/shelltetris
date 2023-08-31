@@ -1,4 +1,4 @@
-from main import Board, Piece, Point
+from main import Board, Shape, Point
 
 """
 Empty board:
@@ -23,7 +23,7 @@ Empty board:
     . . . . . . . . . .
     . . . . . . . . . .
 
-Board with some piece in it:
+Board with some shape in it:
     . . . . . . . . . .
     . . . . . . . . . .
     . . . . . . . . . .
@@ -45,7 +45,7 @@ Board with some piece in it:
     . . . . . # . . . .
     . . . . . # . . . .
 
-Board with multiple pieces:
+Board with multiple shapes:
     . . . . . . . . . .
     . . . . . . . . . .
     . # # . . . . . . .
@@ -161,7 +161,7 @@ def test_draw_matrix_with_ocupied_spaces():
     assert board.draw() == expected
 
 
-def test_draw_a_board_with_a_piece():
+def test_draw_a_board_with_a_shape():
     expected = (
         '# . . . . . . . . . \n'
         '# . . . . . . . . . \n'
@@ -185,11 +185,11 @@ def test_draw_a_board_with_a_piece():
         '. . . . . . . . . . \n'
     )
     board = Board()
-    piece = Piece(
+    shape = Shape([
         Point(0, 0),
         Point(1, 0),
         Point(2, 0),
         Point(3, 0)
-    )
+    ])
 
-    assert board.draw(piece) == expected
+    assert board.draw(shape) == expected
