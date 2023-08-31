@@ -1,4 +1,4 @@
-from main import Board, Point
+from main import Board, Piece, Point
 
 """
 Empty board:
@@ -159,3 +159,37 @@ def test_draw_matrix_with_ocupied_spaces():
     board = Board(ocupied_spaces=points)
 
     assert board.draw() == expected
+
+
+def test_draw_a_board_with_a_piece():
+    expected = (
+        '# . . . . . . . . . \n'
+        '# . . . . . . . . . \n'
+        '# . . . . . . . . . \n'
+        '# . . . . . . . . . \n'
+        '. . . . . . . . . . \n'
+        '. . . . . . . . . . \n'
+        '. . . . . . . . . . \n'
+        '. . . . . . . . . . \n'
+        '. . . . . . . . . . \n'
+        '. . . . . . . . . . \n'
+        '. . . . . . . . . . \n'
+        '. . . . . . . . . . \n'
+        '. . . . . . . . . . \n'
+        '. . . . . . . . . . \n'
+        '. . . . . . . . . . \n'
+        '. . . . . . . . . . \n'
+        '. . . . . . . . . . \n'
+        '. . . . . . . . . . \n'
+        '. . . . . . . . . . \n'
+        '. . . . . . . . . . \n'
+    )
+    board = Board()
+    piece = Piece(
+        Point(0, 0),
+        Point(1, 0),
+        Point(2, 0),
+        Point(3, 0)
+    )
+
+    assert board.draw(piece) == expected

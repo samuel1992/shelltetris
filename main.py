@@ -1,6 +1,6 @@
 import os
 import time
-from typing import List, Tuple
+from typing import List, Tuple, Optional
 
 
 class Point:
@@ -42,10 +42,10 @@ class Piece:
 
     def colide(self, height: int):
         return (
-            self.a.next_line == height
-            or self.b.next_line == height
-            or self.c.next_line == height
-            or self.d.next_line == height
+            self.a.next_line == height or
+            self.b.next_line == height or
+            self.c.next_line == height or
+            self.d.next_line == height
         )
 
     def move_right(self) -> 'Piece':
@@ -97,11 +97,23 @@ class Board:
                 if self.matrix[x][y] == point:
                     self.matrix[x][y] = point
 
-    def draw(self):
+    def draw(self, piece: Optional[Piece] = None):
         string = ''
         for line in self.matrix:
             for point in line:
-                string += point.object
+                if (
+                    piece is not None and
+                    (
+                        piece.a == point or
+                        piece.b == point or
+                        piece.c == point or
+                        piece.d == point
+                    )
+                ):
+                    string += '# '
+                else:
+                    string += point.object
+
             string += '\n'
 
         return string
@@ -111,64 +123,51 @@ def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
 
 
-def draw_board(piece: Piece):
-    print(f'PIECE ROUND {piece.round}')
-    print()
-
-#     for line in range(HEIGHT):
-#         for column in range(WIDTH):
-#             if (
-#                     piece.a == (column, line) or
-#                     piece.b == (column, line) or
-#                     piece.c == (column, line) or
-#                     piece.d == (column, line)
-#             ):
-#                 print('#', end=' ')
-#             else:
-#         print()
-
-
 if __name__ == '__main__':
     pieces = [
         Piece(
-            Point(7, 0),
-            Point(7, 1),
-            Point(7, 2),
-            Point(7, 3)
+            Point(0, 4),
+            Point(1, 4),
+            Point(2, 4),
+            Point(3, 4)
         ),
         Piece(
-            Point(7, 0),
-            Point(7, 1),
-            Point(8, 0),
-            Point(8, 1)
+            Point(0, 4),
+            Point(1, 4),
+            Point(0, 5),
+            Point(1, 5)
         ),
         Piece(
-            Point(7, 0),
-            Point(7, 1),
-            Point(8, 1),
-            Point(8, 2)
+            Point(0, 4),
+            Point(1, 4),
+            Point(1, 5),
+            Point(2, 5)
         ),
         Piece(
-            Point(7, 0),
-            Point(6, 1),
-            Point(7, 1),
-            Point(8, 1)
+            Point(0, 4),
+            Point(1, 3),
+            Point(1, 4),
+            Point(1, 5)
         )
     ]
+    board = Board()
+
     piece_count = 0
+
     while True:
         piece = pieces[piece_count]
         clear_screen()
-        draw_board(piece)
 
-        if piece.round != 0 and not piece.colide(HEIGHT):
+        print(f'PIECE ROUND: {piece.round}')
+        print()
+        print(board.draw(piece))
+
+        if not piece.colide(board.height):
             piece.move_one_line()
-
-        if piece.colide(HEIGHT):
+        else:
             piece_count += 1
-
             if piece_count == len(pieces):
                 piece_count = 0
 
         piece.round += 1
-        time.sleep(0.2)
+        time.sleep(0.5)
