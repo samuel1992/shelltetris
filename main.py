@@ -98,6 +98,7 @@ class Board:
                     self.matrix[x][y] = point
 
     def draw(self, piece: Optional[Piece] = None):
+        self._fill_ocupied_spaces()
         string = ''
         for line in self.matrix:
             for point in line:
@@ -126,28 +127,28 @@ def clear_screen():
 if __name__ == '__main__':
     pieces = [
         Piece(
-            Point(0, 4),
-            Point(1, 4),
-            Point(2, 4),
-            Point(3, 4)
+            Point(0, 4, '#'),
+            Point(1, 4, '#'),
+            Point(2, 4, '#'),
+            Point(3, 4, '#')
         ),
         Piece(
-            Point(0, 4),
-            Point(1, 4),
-            Point(0, 5),
-            Point(1, 5)
+            Point(0, 4, '#'),
+            Point(1, 4, '#'),
+            Point(0, 5, '#'),
+            Point(1, 5, '#')
         ),
         Piece(
-            Point(0, 4),
-            Point(1, 4),
-            Point(1, 5),
-            Point(2, 5)
+            Point(0, 4, '#'),
+            Point(1, 4, '#'),
+            Point(1, 5, '#'),
+            Point(2, 5, '#')
         ),
         Piece(
-            Point(0, 4),
-            Point(1, 3),
-            Point(1, 4),
-            Point(1, 5)
+            Point(0, 4, '#'),
+            Point(1, 3, '#'),
+            Point(1, 4, '#'),
+            Point(1, 5, '#')
         )
     ]
     board = Board()
@@ -165,6 +166,7 @@ if __name__ == '__main__':
         if not piece.colide(board.height):
             piece.move_one_line()
         else:
+            board.ocupied_spaces.extend([piece.a, piece.b, piece.c, piece.d])
             piece_count += 1
             if piece_count == len(pieces):
                 piece_count = 0
