@@ -85,7 +85,7 @@ def main(stdscr):
         if not board.collision_down(shape):
             shape.move_one_line()
         else:
-            board.occupied_spaces.extend(shape.points)
+            board.update(shape)
             shape = get_new_shape()
 
         stdscr.refresh()

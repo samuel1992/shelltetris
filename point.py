@@ -2,7 +2,7 @@ class Point:
     def __init__(self, line: int, column: int, object: str = '.'):
         self.line = line
         self.column = column
-        self.object = object + ' '
+        self.object = object
 
     @property
     def next_line(self):

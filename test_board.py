@@ -62,7 +62,7 @@ def test_replace_a_point_in_matrix():
     assert board.draw() == expected
 
 
-def test_draw_matrix_with_occupied_spaces():
+def test_update_board_matrix():
     expected = (
         '. . . . . . . . . . \n'
         '. . . . . . . . . . \n'
@@ -85,13 +85,14 @@ def test_draw_matrix_with_occupied_spaces():
         '# . . . . . . . . . \n'
         '# . . . . . . . . . \n'
     )
-    points = [
+    shape = Shape([
         Point(16, 0, '#'),
         Point(17, 0, '#'),
         Point(18, 0, '#'),
         Point(19, 0, '#')
-    ]
-    board = Board(occupied_spaces=points)
+    ])
+    board = Board()
+    board.update(shape)
 
     assert board.draw() == expected
 
