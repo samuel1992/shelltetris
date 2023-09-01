@@ -1,4 +1,6 @@
-from main import Board, Shape, Point
+from board import Board
+from shape import Shape
+from point import Point
 
 
 def test_draw_an_empty_board():
@@ -139,6 +141,7 @@ def test_shape_colision_with_left_border():
 
     assert board.collision_left(shape)
 
+
 def test_shape_colision_with_right_border():
     board = Board()
     shape = Shape([
@@ -149,6 +152,7 @@ def test_shape_colision_with_right_border():
     ])
 
     assert board.collision_right(shape)
+
 
 def test_shape_colision_with_bottom_border():
     board = Board()
