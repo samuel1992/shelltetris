@@ -20,12 +20,6 @@ class Board:
 
             self.matrix.append(line)
 
-    def replace_point(self, point: Point):
-        for x in range(self.height):
-            for y in range(self.width):
-                if self.matrix[x][y] == point:
-                    self.matrix[x][y] = point
-
     def collision_down(self, shape: Shape) -> bool:
         return (
             any(p.line + 1 == self.height for p in shape.points)

@@ -42,8 +42,15 @@ shapes = [
         (1, 5, '#'),
         (1, 4, '#'),
         (2, 4, '#')
+    ),
+    (
+        (0, 4, '#'),
+        (0, 5, '#'),
+        (1, 5, '#'),
+        (2, 5, '#')
     )
 ]
+
 
 def get_new_shape():
     point_coordinates = shapes[randint(0, len(shapes) - 1)]
@@ -55,6 +62,7 @@ def get_new_shape():
             Point(*point_coordinates[3])
         )
     )
+
 
 def main(stdscr):
     board = Board()
@@ -93,7 +101,6 @@ def main(stdscr):
         if board.collision_down(shape):
             board.update(shape)
             shape = get_new_shape()
-            stdscr.addstr(25, 0, f'NEW SHAPE ==> {shape}')
             stdscr.refresh()
             continue
 

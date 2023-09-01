@@ -31,37 +31,6 @@ def test_draw_an_empty_board():
     assert board.draw() == expected
 
 
-def test_replace_a_point_in_matrix():
-    expected = (
-        '. # . . . . . . . . \n'
-        '. . . . . . . . . . \n'
-        '. . . . . . . . . . \n'
-        '. . . . . . . . . . \n'
-        '. . . . . . . . . . \n'
-        '. . . . . . . . . . \n'
-        '. . . . . . . . . . \n'
-        '. . . . . . . . . . \n'
-        '. . . . . . . . . . \n'
-        '. . . . . . . . . . \n'
-        '. . . . . . . . . . \n'
-        '. . . . . . . . . . \n'
-        '. . . . . . . . . . \n'
-        '. . . . . . . . . . \n'
-        '. . . . . . . . . . \n'
-        '. . . . . . . . . . \n'
-        '. . . . . . . . . . \n'
-        '. . . . . . . . . . \n'
-        '. . . . . . . . . . \n'
-        '. . . . . . . . . . \n'
-    )
-    board = Board()
-    point = Point(0, 1, '#')
-
-    board.replace_point(point)
-
-    assert board.draw() == expected
-
-
 def test_update_board_matrix():
     expected = (
         '. . . . . . . . . . \n'
