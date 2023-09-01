@@ -4,14 +4,6 @@ class Point:
         self.column = column
         self.object = object
 
-    @property
-    def next_line(self):
-        return self.line + 1
-
-    @property
-    def at_next_line(self):
-        return self.__class__(self.next_line, self.column)
-
     def __eq__(self, other) -> bool:
         if isinstance(other, tuple):
             return (self.line, self.column) == other

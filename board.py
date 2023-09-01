@@ -28,8 +28,8 @@ class Board:
 
     def collision_down(self, shape: Shape) -> bool:
         return (
-            any(p.next_line == self.height for p in shape.points)
-            or any(self.matrix[p.next_line][p.column].object == '#' for p in shape.points)
+            any(p.line + 1 == self.height for p in shape.points)
+            or any(self.matrix[p.line + 1][p.column].object == '#' for p in shape.points)
         )
 
     def collision_left(self, shape: Shape) -> bool:
