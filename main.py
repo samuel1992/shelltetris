@@ -4,64 +4,13 @@ from typing import List, Optional
 
 from board import Board
 from point import Point
-from shape import Shape
+from shapes import Shape, IShape, JShape, LShape, OShape, SShape, TShape, ZShape
 
-shapes = [
-    (
-        (0, 4, '#'),
-        (1, 4, '#'),
-        (2, 4, '#'),
-        (3, 4, '#')
-    ),
-    (
-        (0, 4, '#'),
-        (1, 4, '#'),
-        (0, 5, '#'),
-        (1, 5, '#')
-    ),
-    (
-        (0, 4, '#'),
-        (1, 4, '#'),
-        (1, 5, '#'),
-        (2, 5, '#')
-    ),
-    (
-        (0, 4, '#'),
-        (1, 3, '#'),
-        (1, 4, '#'),
-        (1, 5, '#')
-    ),
-    (
-        (0, 5, '#'),
-        (1, 5, '#'),
-        (1, 4, '#'),
-        (2, 4, '#')
-    ),
-    (
-        (0, 5, '#'),
-        (1, 5, '#'),
-        (1, 4, '#'),
-        (2, 4, '#')
-    ),
-    (
-        (0, 4, '#'),
-        (0, 5, '#'),
-        (1, 5, '#'),
-        (2, 5, '#')
-    )
-]
+shapes = [IShape, JShape, LShape, OShape, SShape, TShape, ZShape]
 
 
 def get_new_shape():
-    point_coordinates = shapes[randint(0, len(shapes) - 1)]
-    return Shape(
-        (
-            Point(*point_coordinates[0]),
-            Point(*point_coordinates[1]),
-            Point(*point_coordinates[2]),
-            Point(*point_coordinates[3])
-        )
-    )
+    return shapes[randint(0, len(shapes) - 1)]()
 
 
 def main(stdscr):
@@ -93,6 +42,9 @@ def main(stdscr):
         if key == ord('s'):
             if not board.collision_down(shape):
                 shape.move_one_line()
+
+        if key == ord('w'):
+                board.rotate_shape(shape)
 
         # Display the Tetris game board and shape
         stdscr.addstr(0, 0, ' === SHELL TETRIS ===')

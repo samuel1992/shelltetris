@@ -1,6 +1,6 @@
 from typing import List, Optional
 from point import Point
-from shape import Shape
+from shapes import Shape
 
 
 class Board:
@@ -41,6 +41,10 @@ class Board:
     def update(self, shape: Shape):
         for point in shape.points:
             self.matrix[point.line][point.column] = point
+
+    def rotate_shape(self, shape: Shape):
+        if not self.collision_right(shape):
+            shape.rotate()
 
     def draw(self, shape: Optional[Shape] = None):
         string = ''
