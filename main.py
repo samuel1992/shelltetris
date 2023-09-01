@@ -7,34 +7,46 @@ from point import Point
 from shape import Shape
 
 shapes = [
-    Shape([
+    (
         Point(0, 4, '#'),
         Point(1, 4, '#'),
         Point(2, 4, '#'),
         Point(3, 4, '#')
-    ]),
-    Shape([
+    ),
+    (
         Point(0, 4, '#'),
         Point(1, 4, '#'),
         Point(0, 5, '#'),
         Point(1, 5, '#')
-    ]),
-    Shape([
+    ),
+    (
         Point(0, 4, '#'),
         Point(1, 4, '#'),
         Point(1, 5, '#'),
         Point(2, 5, '#')
-    ]),
-    Shape([
+    ),
+    (
         Point(0, 4, '#'),
         Point(1, 3, '#'),
         Point(1, 4, '#'),
         Point(1, 5, '#')
-    ])
+    ),
+    (
+        Point(0, 5, '#'),
+        Point(1, 5, '#'),
+        Point(1, 4, '#'),
+        Point(2, 4, '#')
+    ),
+    (
+        Point(0, 5, '#'),
+        Point(1, 5, '#'),
+        Point(1, 4, '#'),
+        Point(2, 4, '#')
+    )
 ]
 
 def get_new_shape():
-    return shapes[randint(0, len(shapes) - 1)]
+    return Shape(shapes[randint(0, len(shapes) - 1)])
 
 def main(stdscr):
     board = Board()

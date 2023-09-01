@@ -1,4 +1,4 @@
-from typing import List
+from typing import Tuple
 
 from point import Point
 
@@ -7,7 +7,7 @@ class Shape:
     base_width = 4
     base_height = 4
 
-    def __init__(self, points: List[Point]):
+    def __init__(self, points: Tuple[Point]):
         self.points = points
 
     def move_one_line(self):
