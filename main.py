@@ -148,8 +148,8 @@ def main(stdscr):
     curses.curs_set(0)
     stdscr.nodelay(1)
     stdscr.timeout(500)  # Set the delay for getch to 500 milliseconds
-    shape_count = 0
     stdscr.clear()
+    shape_count = 0
 
     while True:
         shape = shapes[shape_count]

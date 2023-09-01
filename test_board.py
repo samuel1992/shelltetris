@@ -126,3 +126,37 @@ def test_draw_a_board_with_a_shape():
     ])
 
     assert board.draw(shape) == expected
+
+
+def test_shape_colision_with_left_border():
+    board = Board()
+    shape = Shape([
+        Point(0, 0, '#'),
+        Point(1, 0, '#'),
+        Point(2, 0, '#'),
+        Point(3, 0, '#')
+    ])
+
+    assert board.collision_left(shape)
+
+def test_shape_colision_with_right_border():
+    board = Board()
+    shape = Shape([
+        Point(0, board.width - 1, '#'),
+        Point(1, board.width - 1, '#'),
+        Point(2, board.width - 1, '#'),
+        Point(3, board.width - 1, '#')
+    ])
+
+    assert board.collision_right(shape)
+
+def test_shape_colision_with_bottom_border():
+    board = Board()
+    shape = Shape([
+        Point(16, 0, '#'),
+        Point(17, 0, '#'),
+        Point(18, 0, '#'),
+        Point(19, 0, '#')
+    ])
+
+    assert board.collision_down(shape)
