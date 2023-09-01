@@ -8,45 +8,53 @@ from shape import Shape
 
 shapes = [
     (
-        Point(0, 4, '#'),
-        Point(1, 4, '#'),
-        Point(2, 4, '#'),
-        Point(3, 4, '#')
+        (0, 4, '#'),
+        (1, 4, '#'),
+        (2, 4, '#'),
+        (3, 4, '#')
     ),
     (
-        Point(0, 4, '#'),
-        Point(1, 4, '#'),
-        Point(0, 5, '#'),
-        Point(1, 5, '#')
+        (0, 4, '#'),
+        (1, 4, '#'),
+        (0, 5, '#'),
+        (1, 5, '#')
     ),
     (
-        Point(0, 4, '#'),
-        Point(1, 4, '#'),
-        Point(1, 5, '#'),
-        Point(2, 5, '#')
+        (0, 4, '#'),
+        (1, 4, '#'),
+        (1, 5, '#'),
+        (2, 5, '#')
     ),
     (
-        Point(0, 4, '#'),
-        Point(1, 3, '#'),
-        Point(1, 4, '#'),
-        Point(1, 5, '#')
+        (0, 4, '#'),
+        (1, 3, '#'),
+        (1, 4, '#'),
+        (1, 5, '#')
     ),
     (
-        Point(0, 5, '#'),
-        Point(1, 5, '#'),
-        Point(1, 4, '#'),
-        Point(2, 4, '#')
+        (0, 5, '#'),
+        (1, 5, '#'),
+        (1, 4, '#'),
+        (2, 4, '#')
     ),
     (
-        Point(0, 5, '#'),
-        Point(1, 5, '#'),
-        Point(1, 4, '#'),
-        Point(2, 4, '#')
+        (0, 5, '#'),
+        (1, 5, '#'),
+        (1, 4, '#'),
+        (2, 4, '#')
     )
 ]
 
 def get_new_shape():
-    return Shape(shapes[randint(0, len(shapes) - 1)])
+    point_coordinates = shapes[randint(0, len(shapes) - 1)]
+    return Shape(
+        (
+            Point(*point_coordinates[0]),
+            Point(*point_coordinates[1]),
+            Point(*point_coordinates[2]),
+            Point(*point_coordinates[3])
+        )
+    )
 
 def main(stdscr):
     board = Board()
@@ -82,12 +90,14 @@ def main(stdscr):
         stdscr.addstr(0, 0, ' === SHELL TETRIS ===')
         stdscr.addstr(2, 0, board.draw(shape))
 
-        if not board.collision_down(shape):
-            shape.move_one_line()
-        else:
+        if board.collision_down(shape):
             board.update(shape)
             shape = get_new_shape()
+            stdscr.addstr(25, 0, f'NEW SHAPE ==> {shape}')
+            stdscr.refresh()
+            continue
 
+        shape.move_one_line()
         stdscr.refresh()
 
 
