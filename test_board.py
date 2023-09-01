@@ -1,72 +1,5 @@
 from main import Board, Shape, Point
 
-"""
-Empty board:
-    . . . . . . . . . .
-    . . . . . . . . . .
-    . . . . . . . . . .
-    . . . . . . . . . .
-    . . . . . . . . . .
-    . . . . . . . . . .
-    . . . . . . . . . .
-    . . . . . . . . . .
-    . . . . . . . . . .
-    . . . . . . . . . .
-    . . . . . . . . . .
-    . . . . . . . . . .
-    . . . . . . . . . .
-    . . . . . . . . . .
-    . . . . . . . . . .
-    . . . . . . . . . .
-    . . . . . . . . . .
-    . . . . . . . . . .
-    . . . . . . . . . .
-    . . . . . . . . . .
-
-Board with some shape in it:
-    . . . . . . . . . .
-    . . . . . . . . . .
-    . . . . . . . . . .
-    . . . . . . . . . .
-    . . . . . . . . . .
-    . . . . . . . . . .
-    . . . . . . . . . .
-    . . . . . . . . . .
-    . . . . . . . . . .
-    . . . . . . . . . .
-    . . . . . . . . . .
-    . . . . . . . . . .
-    . . . . . . . . . .
-    . . . . . . . . . .
-    . . . . . . . . . .
-    . . . . . . . . . .
-    . . . . . # . . . .
-    . . . . . # . . . .
-    . . . . . # . . . .
-    . . . . . # . . . .
-
-Board with multiple shapes:
-    . . . . . . . . . .
-    . . . . . . . . . .
-    . # # . . . . . . .
-    . # # . . . . . . .
-    . . . . . . . . . .
-    . . . . . . . . . .
-    . . . . . . . . . .
-    . . . . . . . . . .
-    . . . . . . . . . .
-    . . . . . . . . . .
-    . . . . . . . . . .
-    . . . . . . . . . .
-    . . . . . . . . . .
-    . . . . . . . . . .
-    . . . . . . . . . .
-    . . . . . . . . . .
-    . . . . . # . . . .
-    . . . . . # . . . .
-    . # . . . # . . # #
-    # # # . . # . # # .
-"""
 
 def test_draw_an_empty_board():
     expected = (
@@ -127,7 +60,7 @@ def test_replace_a_point_in_matrix():
     assert board.draw() == expected
 
 
-def test_draw_matrix_with_ocupied_spaces():
+def test_draw_matrix_with_occupied_spaces():
     expected = (
         '. . . . . . . . . . \n'
         '. . . . . . . . . . \n'
@@ -156,7 +89,7 @@ def test_draw_matrix_with_ocupied_spaces():
         Point(18, 0, '#'),
         Point(19, 0, '#')
     ]
-    board = Board(ocupied_spaces=points)
+    board = Board(occupied_spaces=points)
 
     assert board.draw() == expected
 
@@ -186,10 +119,10 @@ def test_draw_a_board_with_a_shape():
     )
     board = Board()
     shape = Shape([
-        Point(0, 0),
-        Point(1, 0),
-        Point(2, 0),
-        Point(3, 0)
+        Point(0, 0, '#'),
+        Point(1, 0, '#'),
+        Point(2, 0, '#'),
+        Point(3, 0, '#')
     ])
 
     assert board.draw(shape) == expected

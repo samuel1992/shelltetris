@@ -1,6 +1,5 @@
-import os
-import time
-from typing import List, Optional, Tuple
+import curses
+from typing import List, Optional
 
 
 class Point:
@@ -15,7 +14,7 @@ class Point:
 
     @property
     def at_next_line(self):
-        return self.__class__(self.next_line, self.column, self.object)
+        return self.__class__(self.next_line, self.column)
 
     def __eq__(self, other):
         if isinstance(other, tuple):
@@ -49,24 +48,22 @@ class Shape:
             point.column -= 1
         return self
 
-    def draw(self):
-        pass
-
 
 class Board:
-    def __init__(self, ocupied_spaces: List[Point] = []):
-        self.width = 10
-        self.height = 20
-        self.ocupied_spaces = ocupied_spaces
+    width = 10
+    height = 20
+
+    def __init__(self, occupied_spaces: List[Point] = []):
+        self.occupied_spaces = occupied_spaces
 
         self.matrix: List[List] = []
         self._build_matrix()
-        self._fill_ocupied_spaces()
+        self._fill_occupied_spaces()
 
-    def _fill_ocupied_spaces(self):
+    def _fill_occupied_spaces(self):
         assert len(self.matrix) != 0, 'Matrix must be built'
 
-        for point in self.ocupied_spaces:
+        for point in self.occupied_spaces:
             self.matrix[point.line][point.column] = point
 
     def _build_matrix(self):
@@ -84,32 +81,40 @@ class Board:
                 if self.matrix[x][y] == point:
                     self.matrix[x][y] = point
 
-    def colision(self, shape: Shape) -> bool:
+    def collision_down(self, shape: Shape) -> bool:
         return (
             any(p.next_line == self.height for p in shape.points)
-            or any(p.at_next_line in self.ocupied_spaces for p in shape.points)
+            or any(p.at_next_line in self.occupied_spaces for p in shape.points)
+        )
+
+    def collision_left(self, shape: Shape) -> bool:
+        return (
+            any(p.column == 0 for p in shape.points)
+            or any((p.line, p.column - 1) in self.occupied_spaces for p in shape.points)
+        )
+
+    def collision_right(self, shape: Shape) -> bool:
+        return (
+            any(p.column + 1 == self.width for p in shape.points)
+            or any((p.line, p.column + 1) in self.occupied_spaces for p in shape.points)
         )
 
     def draw(self, shape: Optional[Shape] = None):
-        self._fill_ocupied_spaces()
+        self._fill_occupied_spaces()
         string = ''
         for line in self.matrix:
             for point in line:
-                if shape is not None and any(p == point for p in shape.points):
-                    string += '# '
-                else:
-                    string += point.object
+                if shape is not None:
+                    point = next(filter(lambda p: p == point, shape.points), point)
+
+                string += point.object
 
             string += '\n'
 
         return string
 
 
-def clear_screen():
-    os.system('cls' if os.name == 'nt' else 'clear')
-
-
-if __name__ == '__main__':
+def main(stdscr):
     shapes = [
         Shape([
             Point(0, 4, '#'),
@@ -136,25 +141,53 @@ if __name__ == '__main__':
             Point(1, 5, '#')
         ])
     ]
-    board = Board()
 
+    board = Board()
     shape_count = 0
+
+    curses.curs_set(0)
+    stdscr.nodelay(1)
+    stdscr.timeout(500)  # Set the delay for getch to 500 milliseconds
+    shape_count = 0
+    stdscr.clear()
 
     while True:
         shape = shapes[shape_count]
-        clear_screen()
 
-        print(f'shape ROUND: {shape.round}')
-        print()
-        print(board.draw(shape))
+        # Get keyboard input
+        key = stdscr.getch()
 
-        if not board.colision(shape):
+        # Check for key presses and exit if 'q' is pressed
+        if key == ord('q'):
+            break
+
+        if key == ord('a'):
+            if not board.collision_left(shape):
+                shape.move_left()
+
+        if key == ord('d'):
+            if not board.collision_right(shape):
+                shape.move_right()
+
+        if key == ord('s'):
+            if not board.collision_down(shape):
+                shape.move_one_line()
+
+        # Display the Tetris game board and shape
+        stdscr.addstr(0, 0, ' === SHELL TETRIS ===')
+        stdscr.addstr(2, 0, board.draw(shape))
+
+        if not board.collision_down(shape):
             shape.move_one_line()
         else:
-            board.ocupied_spaces.extend(shape.points)
+            board.occupied_spaces.extend(shape.points)
             shape_count += 1
             if shape_count == len(shapes):
                 shape_count = 0
 
         shape.round += 1
-        time.sleep(0.5)
+        stdscr.refresh()
+
+
+if __name__ == '__main__':
+    curses.wrapper(main)
