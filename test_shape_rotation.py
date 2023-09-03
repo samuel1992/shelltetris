@@ -1,15 +1,19 @@
 from board import Board
-from shapes import Shape, IShape, JShape, LShape, OShape, SShape, TShape, ZShape  
-from point import Point
+from shapes import (IShape, JShape, LShape, OShape, Shape, SShape, TShape,
+                    ZShape)
 
 
-class TestBoard:
-    def test_draw_an_empty_board(self):
-        expected = (
-            '. . . . . . . . . . \n'
-            '. . . . . . . . . . \n'
-            '. . . . . . . . . . \n'
-            '. . . . . . . . . . \n'
+class TestShapeRotation:
+    """
+    More as an integration test to see if the shape is going to be rotated once its draw by the board.
+    """
+
+    def test_rotate_IShape(self):
+        initial_shape = (
+            '. . . . # . . . . . \n'
+            '. . . . # . . . . . \n'
+            '. . . . # . . . . . \n'
+            '. . . . # . . . . . \n'
             '. . . . . . . . . . \n'
             '. . . . . . . . . . \n'
             '. . . . . . . . . . \n'
@@ -27,153 +31,11 @@ class TestBoard:
             '. . . . . . . . . . \n'
             '. . . . . . . . . . \n'
         )
-        board = Board()
-
-        assert board.draw() == expected
-
-
-    def test_update_board_matrix(self):
-        expected = (
+        rotated_shape = (
             '. . . . . . . . . . \n'
             '. . . . . . . . . . \n'
             '. . . . . . . . . . \n'
-            '. . . . . . . . . . \n'
-            '. . . . . . . . . . \n'
-            '. . . . . . . . . . \n'
-            '. . . . . . . . . . \n'
-            '. . . . . . . . . . \n'
-            '. . . . . . . . . . \n'
-            '. . . . . . . . . . \n'
-            '. . . . . . . . . . \n'
-            '. . . . . . . . . . \n'
-            '. . . . . . . . . . \n'
-            '. . . . . . . . . . \n'
-            '. . . . . . . . . . \n'
-            '. . . . . . . . . . \n'
-            '# . . . . . . . . . \n'
-            '# . . . . . . . . . \n'
-            '# . . . . . . . . . \n'
-            '# . . . . . . . . . \n'
-        )
-        shape = Shape([
-            Point(16, 0, '#'),
-            Point(17, 0, '#'),
-            Point(18, 0, '#'),
-            Point(19, 0, '#')
-        ])
-        board = Board()
-        board.update(shape)
-
-        assert board.draw() == expected
-
-
-    def test_draw_a_board_with_a_shape(self):
-        expected = (
-            '# . . . . . . . . . \n'
-            '# . . . . . . . . . \n'
-            '# . . . . . . . . . \n'
-            '# . . . . . . . . . \n'
-            '. . . . . . . . . . \n'
-            '. . . . . . . . . . \n'
-            '. . . . . . . . . . \n'
-            '. . . . . . . . . . \n'
-            '. . . . . . . . . . \n'
-            '. . . . . . . . . . \n'
-            '. . . . . . . . . . \n'
-            '. . . . . . . . . . \n'
-            '. . . . . . . . . . \n'
-            '. . . . . . . . . . \n'
-            '. . . . . . . . . . \n'
-            '. . . . . . . . . . \n'
-            '. . . . . . . . . . \n'
-            '. . . . . . . . . . \n'
-            '. . . . . . . . . . \n'
-            '. . . . . . . . . . \n'
-        )
-        board = Board()
-        shape = Shape([
-            Point(0, 0, '#'),
-            Point(1, 0, '#'),
-            Point(2, 0, '#'),
-            Point(3, 0, '#')
-        ])
-
-        assert board.draw(shape) == expected
-
-
-    def test_shape_colision_with_left_border(self):
-        board = Board()
-        shape = Shape([
-            Point(0, 0, '#'),
-            Point(1, 0, '#'),
-            Point(2, 0, '#'),
-            Point(3, 0, '#')
-        ])
-
-        assert board.collision_left(shape)
-
-
-    def test_shape_colision_with_right_border(self):
-        board = Board()
-        shape = Shape([
-            Point(0, board.width - 1, '#'),
-            Point(1, board.width - 1, '#'),
-            Point(2, board.width - 1, '#'),
-            Point(3, board.width - 1, '#')
-        ])
-
-        assert board.collision_right(shape)
-
-
-    def test_shape_colision_with_bottom_border(self):
-        board = Board()
-        shape = Shape([
-            Point(16, 0, '#'),
-            Point(17, 0, '#'),
-            Point(18, 0, '#'),
-            Point(19, 0, '#')
-        ])
-
-        assert board.collision_down(shape)
-
-
-    def test_rotate_shape_to_the_right(self):
-        """
-         . . . . # . . . . .
-         . . . . # . . . . .
-         . . . . # . . . . .
-         . . . . # . . . . .
-        """
-        board = Board()
-
-        shape = Shape([
-            Point(0, 0, '#'),
-            Point(1, 0, '#'),
-            Point(2, 0, '#'),
-            Point(3, 0, '#')
-        ])
-
-        """
-         . . . . . . . . . .
-         . # # # # . . . . .
-         . . . . . . . . . .
-         . . . . . . . . . .
-        """
-        expected_shape = Shape([
-            Point(0, 0, '#'),
-            Point(1, 0, '#'),
-            Point(2, 0, '#'),
-            Point(3, 0, '#')
-        ])
-
-
-class TestInitialShapes:
-    def test_Ishape(self):
-        expected = (
-            '. . . . # . . . . . \n'
-            '. . . . # . . . . . \n'
-            '. . . . # . . . . . \n'
-            '. . . . # . . . . . \n'
+            '. . . . # # # # . . \n'
             '. . . . . . . . . . \n'
             '. . . . . . . . . . \n'
             '. . . . . . . . . . \n'
@@ -194,13 +56,41 @@ class TestInitialShapes:
         board = Board()
         shape = IShape()
 
-        assert board.draw(shape) == expected
+        assert board.draw(shape) == initial_shape
 
-    def test_Jshape(self):
-        expected = (
+        shape.rotate()
+        assert board.draw(shape) == rotated_shape
+
+        shape.rotate()
+        assert board.draw(shape) == initial_shape
+
+    def test_rotate_JShape(self):
+        initial_shape = (
             '. . . . # # . . . . \n'
             '. . . . # . . . . . \n'
             '. . . . # . . . . . \n'
+            '. . . . . . . . . . \n'
+            '. . . . . . . . . . \n'
+            '. . . . . . . . . . \n'
+            '. . . . . . . . . . \n'
+            '. . . . . . . . . . \n'
+            '. . . . . . . . . . \n'
+            '. . . . . . . . . . \n'
+            '. . . . . . . . . . \n'
+            '. . . . . . . . . . \n'
+            '. . . . . . . . . . \n'
+            '. . . . . . . . . . \n'
+            '. . . . . . . . . . \n'
+            '. . . . . . . . . . \n'
+            '. . . . . . . . . . \n'
+            '. . . . . . . . . . \n'
+            '. . . . . . . . . . \n'
+            '. . . . . . . . . . \n'
+        )
+        rotated_shape = (
+            '. . . . . . . . . . \n'
+            '. . . . # # # . . . \n'
+            '. . . . . . # . . . \n'
             '. . . . . . . . . . \n'
             '. . . . . . . . . . \n'
             '. . . . . . . . . . \n'
@@ -222,10 +112,16 @@ class TestInitialShapes:
         board = Board()
         shape = JShape()
 
-        assert board.draw(shape) == expected
+        assert board.draw(shape) == initial_shape
 
-    def test_Lshape(self):
-        expected = (
+        shape.rotate()
+        assert board.draw(shape) == rotated_shape
+
+        shape.rotate()
+        assert board.draw(shape) == initial_shape
+
+    def test_rotate_LShape(self):
+        initial_shape = (
             '. . . . # # . . . . \n'
             '. . . . . # . . . . \n'
             '. . . . . # . . . . \n'
@@ -247,13 +143,42 @@ class TestInitialShapes:
             '. . . . . . . . . . \n'
             '. . . . . . . . . . \n'
         )
+        rotated_shape = (
+            '. . . . . . . . . . \n'
+            '. . . . . . . # . . \n'
+            '. . . . . # # # . . \n'
+            '. . . . . . . . . . \n'
+            '. . . . . . . . . . \n'
+            '. . . . . . . . . . \n'
+            '. . . . . . . . . . \n'
+            '. . . . . . . . . . \n'
+            '. . . . . . . . . . \n'
+            '. . . . . . . . . . \n'
+            '. . . . . . . . . . \n'
+            '. . . . . . . . . . \n'
+            '. . . . . . . . . . \n'
+            '. . . . . . . . . . \n'
+            '. . . . . . . . . . \n'
+            '. . . . . . . . . . \n'
+            '. . . . . . . . . . \n'
+            '. . . . . . . . . . \n'
+            '. . . . . . . . . . \n'
+            '. . . . . . . . . . \n'
+        )
+
         board = Board()
         shape = LShape()
 
-        assert board.draw(shape) == expected
+        assert board.draw(shape) == initial_shape
 
-    def test_Oshape(self):
-        expected = (
+        shape.rotate()
+        assert board.draw(shape) == rotated_shape
+
+        shape.rotate()
+        assert board.draw(shape) == initial_shape
+
+    def test_rotate_OShape(self):
+        initial_shape = (
             '. . . . # # . . . . \n'
             '. . . . # # . . . . \n'
             '. . . . . . . . . . \n'
@@ -275,13 +200,20 @@ class TestInitialShapes:
             '. . . . . . . . . . \n'
             '. . . . . . . . . . \n'
         )
+
         board = Board()
         shape = OShape()
 
-        assert board.draw(shape) == expected
+        assert board.draw(shape) == initial_shape
 
-    def test_Sshape(self):
-        expected = (
+        shape.rotate()
+        assert board.draw(shape) == initial_shape
+
+        shape.rotate()
+        assert board.draw(shape) == initial_shape
+
+    def test_rotate_SShape(self):
+        initial_shape = (
             '. . . . . . . . . . \n'
             '. . . . # # . . . . \n'
             '. . . # # . . . . . \n'
@@ -303,13 +235,42 @@ class TestInitialShapes:
             '. . . . . . . . . . \n'
             '. . . . . . . . . . \n'
         )
+        rotated_shape = (
+            '. . . # . . . . . . \n'
+            '. . . # # . . . . . \n'
+            '. . . . # . . . . . \n'
+            '. . . . . . . . . . \n'
+            '. . . . . . . . . . \n'
+            '. . . . . . . . . . \n'
+            '. . . . . . . . . . \n'
+            '. . . . . . . . . . \n'
+            '. . . . . . . . . . \n'
+            '. . . . . . . . . . \n'
+            '. . . . . . . . . . \n'
+            '. . . . . . . . . . \n'
+            '. . . . . . . . . . \n'
+            '. . . . . . . . . . \n'
+            '. . . . . . . . . . \n'
+            '. . . . . . . . . . \n'
+            '. . . . . . . . . . \n'
+            '. . . . . . . . . . \n'
+            '. . . . . . . . . . \n'
+            '. . . . . . . . . . \n'
+        )
+
         board = Board()
         shape = SShape()
 
-        assert board.draw(shape) == expected
+        assert board.draw(shape) == initial_shape
 
-    def test_Tshape(self):
-        expected = (
+        shape.rotate()
+        assert board.draw(shape) == rotated_shape
+
+        shape.rotate()
+        assert board.draw(shape) == initial_shape
+
+    def test_rotate_TShape(self):
+        initial_shape = (
             '. . . . . . . . . . \n'
             '. . . # # # . . . . \n'
             '. . . . # . . . . . \n'
@@ -331,13 +292,42 @@ class TestInitialShapes:
             '. . . . . . . . . . \n'
             '. . . . . . . . . . \n'
         )
+        rotated_shape = (
+            '. . . . . # . . . . \n'
+            '. . . . # # . . . . \n'
+            '. . . . . # . . . . \n'
+            '. . . . . . . . . . \n'
+            '. . . . . . . . . . \n'
+            '. . . . . . . . . . \n'
+            '. . . . . . . . . . \n'
+            '. . . . . . . . . . \n'
+            '. . . . . . . . . . \n'
+            '. . . . . . . . . . \n'
+            '. . . . . . . . . . \n'
+            '. . . . . . . . . . \n'
+            '. . . . . . . . . . \n'
+            '. . . . . . . . . . \n'
+            '. . . . . . . . . . \n'
+            '. . . . . . . . . . \n'
+            '. . . . . . . . . . \n'
+            '. . . . . . . . . . \n'
+            '. . . . . . . . . . \n'
+            '. . . . . . . . . . \n'
+        )
+
         board = Board()
         shape = TShape()
 
-        assert board.draw(shape) == expected
+        assert board.draw(shape) == initial_shape
 
-    def test_Zshape(self):
-        expected = (
+        shape.rotate()
+        assert board.draw(shape) == rotated_shape
+
+        shape.rotate()
+        assert board.draw(shape) == initial_shape
+
+    def test_rotate_ZShape(self):
+        initial_shape = (
             '. . . . . . . . . . \n'
             '. . . # # . . . . . \n'
             '. . . . # # . . . . \n'
@@ -359,16 +349,10 @@ class TestInitialShapes:
             '. . . . . . . . . . \n'
             '. . . . . . . . . . \n'
         )
-        board = Board()
-        shape = ZShape()
-
-        assert board.draw(shape) == expected
-
-    def test_custom_shape(self):
-        expected = (
-            '. . . # . . . . . . \n'
-            '. . . . . . . . . . \n'
-            '. . . . . . . . . . \n'
+        rotated_shape = (
+            '. . . . . # . . . . \n'
+            '. . . . # # . . . . \n'
+            '. . . . # . . . . . \n'
             '. . . . . . . . . . \n'
             '. . . . . . . . . . \n'
             '. . . . . . . . . . \n'
@@ -387,9 +371,14 @@ class TestInitialShapes:
             '. . . . . . . . . . \n'
             '. . . . . . . . . . \n'
         )
-        board = Board()
-        shape = Shape([
-            Point(0, 3, '#'),
-        ])
 
-        assert board.draw(shape) == expected
+        board = Board()
+        shape = ZShape()
+
+        assert board.draw(shape) == initial_shape
+
+        shape.rotate()
+        assert board.draw(shape) == rotated_shape
+
+        shape.rotate()
+        assert board.draw(shape) == initial_shape
