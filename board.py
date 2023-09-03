@@ -21,30 +21,35 @@ class Board:
             self.matrix.append(line)
 
     def collision_down(self, shape: Shape) -> bool:
-        return (
-            any(p.line + 1 == self.height for p in shape.points)
-            or any(self.matrix[p.line + 1][p.column].object == '#' for p in shape.points)
-        )
+        if any(p.line + 1 == self.height for p in shape.points):
+            return True
+
+        if any(self.matrix[p.line + 1][p.column].object == '#' for p in shape.points):
+            return True
+
+        return False
 
     def collision_left(self, shape: Shape) -> bool:
-        return (
-            any(p.column == 0 for p in shape.points)
-            or any(self.matrix[p.line][p.column - 1].object == '#' for p in shape.points)
-        )
+        if any(p.column == 0 for p in shape.points):
+            return True
+
+        if any(self.matrix[p.line][p.column - 1].object == '#' for p in shape.points):
+            return True
+
+        return False
 
     def collision_right(self, shape: Shape) -> bool:
-        return (
-            any(p.column + 1 == self.width for p in shape.points)
-            or any(self.matrix[p.line][p.column + 1].object == '#' for p in shape.points)
-        )
+        if any(p.column + 1 >= self.width for p in shape.points):
+            return True
+
+        if any(self.matrix[p.line][p.column + 1].object == '#' for p in shape.points):
+            return True
+
+        return False
 
     def update(self, shape: Shape):
         for point in shape.points:
             self.matrix[point.line][point.column] = point
-
-    def rotate_shape(self, shape: Shape):
-        if not self.collision_right(shape):
-            shape.rotate()
 
     def draw(self, shape: Optional[Shape] = None):
         string = ''

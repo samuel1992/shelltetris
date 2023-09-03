@@ -56,7 +56,7 @@ class IShape(Shape):
      0 1 2 3 4 5 6 7 8 9
    0 . . . . # . . . . .
    1 . . . . # . . . . .
-   2 . . . . # . . . . .
+   3 . . . . # . . . . .
    3 . . . . # . . . . .
     """
     coordinates = (
@@ -67,6 +67,13 @@ class IShape(Shape):
     )
 
     def rotate(self):
+        """
+         0 1 2 3 4 5 6 7 8 9
+       0 . . . . . . . . . .
+       1 . . . . . . . . . .
+       2 . . . . . . . . . .
+       3 . . . . # # # # . .
+        """
         if self.rotated:
             self.points[0].line -= 3
             self.points[0].column -= 3
@@ -108,6 +115,42 @@ class JShape(Shape):
         (2, 4, '#')
     )
 
+    def rotate(self):
+        """
+         0 1 2 3 4 5 6 7 8 9
+       0 . . . . . . . . . .
+       1 . . . . # # # . . .
+       2 . . . . . . # . . .
+       3 . . . . . . . . . .
+        """
+        if self.rotated:
+            self.points[0].line -= 1
+            self.points[0].column -= 2
+
+            self.points[1].line -= 2
+            self.points[1].column -= 1
+
+            self.points[2].column -= 1
+
+            self.points[3].line += 1
+
+            self.rotated = False
+
+            return
+
+        self.points[0].line += 1
+        self.points[0].column += 2
+
+        self.points[1].line += 2
+        self.points[1].column += 1
+
+        self.points[2].column += 1
+
+        self.points[3].line -= 1
+
+        self.rotated = True
+
+
 
 class LShape(Shape):
     """
@@ -123,6 +166,39 @@ class LShape(Shape):
         (1, 5, '#'),
         (2, 5, '#')
     )
+
+    def rotate(self):
+        """
+         0 1 2 3 4 5 6 7 8 9
+       0 . . . . . . . . . .
+       1 . . . . . . . # . .
+       2 . . . . . # # # . .
+       3 . . . . . . . . . .
+        """
+        if self.rotated:
+            self.points[0].line -= 1
+            self.points[0].column -= 3
+
+            self.points[1].line -= 2
+            self.points[1].column -= 2
+
+            self.points[2].line -= 1
+            self.points[2].column -= 1
+
+            self.rotated = False
+
+            return
+
+        self.points[0].line += 1
+        self.points[0].column += 3
+
+        self.points[1].line += 2
+        self.points[1].column += 2
+
+        self.points[2].line += 1
+        self.points[2].column += 1
+
+        self.rotated = True
 
 
 class OShape(Shape):
@@ -140,50 +216,161 @@ class OShape(Shape):
         (1, 5, '#')
     )
 
+    def rotate(self):
+        """
+         0 1 2 3 4 5 6 7 8 9
+       0 . . . . # # . . . .
+       1 . . . . # # . . . .
+       2 . . . . . . . . . .
+       3 . . . . . . . . . .
+        """
+        if self.rotated:
+            self.rotated = False
+            pass
+
+        self.rotated = True
+
 
 class SShape(Shape):
     """
      0 1 2 3 4 5 6 7 8 9
-   0 . . . . # # . . . .
-   1 . . . # # . . . . .
-   2 . . . . . . . . . .
+   0 . . . . . . . . . .
+   1 . . . . # # . . . .
+   2 . . . # # . . . . .
    3 . . . . . . . . . .
     """
     coordinates = (
-        (0, 4, '#'),
-        (0, 5, '#'),
-        (1, 3, '#'),
-        (1, 4, '#')
+        (1, 4, '#'),
+        (1, 5, '#'),
+        (2, 3, '#'),
+        (2, 4, '#') 
     )
+
+    def rotate(self):
+        """
+         0 1 2 3 4 5 6 7 8 9
+       0 . . . # . . . . . .
+       1 . . . # # . . . . .
+       2 . . . . # . . . . .
+       3 . . . . . . . . . .
+        """
+        if self.rotated:
+            self.points[1].line -= 1
+            self.points[1].column += 1
+
+            self.points[2].line += 2
+
+            self.points[3].line += 1
+            self.points[3].column += 1
+
+            self.rotated = False
+
+            return
+
+        self.points[1].line += 1
+        self.points[1].column -= 1
+
+        self.points[2].line -= 2
+
+        self.points[3].line -= 1
+        self.points[3].column -= 1
+
+        self.rotated = True
 
 
 class TShape(Shape):
     """
      0 1 2 3 4 5 6 7 8 9
-   0 . . . # # # . . . .
-   1 . . . . # . . . . .
-   2 . . . . . . . . . .
+   0 . . . . . . . . . .
+   1 . . . # # # . . . .
+   2 . . . . # . . . . .
    3 . . . . . . . . . .
     """
     coordinates = (
-        (0, 3, '#'),
-        (0, 4, '#'),
-        (0, 5, '#'),
-        (1, 4, '#')
+        (1, 3, '#'), # (0,5)
+        (1, 4, '#'), # (1,5)
+        (1, 5, '#'), # (2,5)
+        (2, 4, '#')  # (1,3)
     )
+    
+    def rotate(self):
+        """
+         0 1 2 3 4 5 6 7 8 9
+       0 . . . . . # . . . .
+       1 . . . . # # . . . .
+       2 . . . . . # . . . .
+       3 . . . . . . . . . .
+        """
+        if self.rotated:
+            self.points[0].line += 1
+            self.points[0].column -= 2
+
+            self.points[1].column -= 1
+
+            self.points[2].line -= 1
+
+            self.points[3].line += 1
+
+            self.rotated = False
+
+            return
+
+        self.points[0].line -= 1
+        self.points[0].column += 2
+
+        self.points[1].column += 1
+
+        self.points[2].line += 1
+
+        self.points[3].line -= 1
+
+        self.rotated = True
 
 
 class ZShape(Shape):
     """
      0 1 2 3 4 5 6 7 8 9
-   0 . . . # # . . . . .
-   1 . . . . # # . . . .
-   2 . . . . . . . . . .
+   0 . . . . . . . . . .
+   1 . . . # # . . . . .
+   2 . . . . # # . . . .
    3 . . . . . . . . . .
     """
     coordinates = (
-        (0, 3, '#'),
-        (0, 4, '#'),
-        (1, 4, '#'),
-        (1, 5, '#')
+        (1, 3, '#'), # (0,5) 
+        (1, 4, '#'), # (1,5) 
+        (2, 4, '#'), # (1,4) 
+        (2, 5, '#')  # (2,4) 
     )
+
+    def rotate(self):
+        """
+         0 1 2 3 4 5 6 7 8 9
+       0 . . . . . # . . . .
+       1 . . . . # # . . . .
+       2 . . . . # . . . . .
+       3 . . . . . . . . . .
+        """
+        if self.rotated:
+            self.points[0].line += 1
+            self.points[0].column -= 2
+
+            self.points[1].column -= 1
+
+            self.points[2].line += 1
+
+            self.points[3].column += 1
+
+            self.rotated = False
+
+            return
+
+        self.points[0].line -= 1
+        self.points[0].column += 2
+
+        self.points[1].column += 1
+
+        self.points[2].line -= 1
+
+        self.points[3].column -= 1
+
+        self.rotated = True

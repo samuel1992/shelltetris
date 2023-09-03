@@ -44,7 +44,11 @@ def main(stdscr):
                 shape.move_one_line()
 
         if key == ord('w'):
-                board.rotate_shape(shape)
+            #TODO: need to handle rotation colision proper
+            if not shape.rotated and board.collision_right(shape):
+                continue
+
+            shape.rotate()
 
         # Display the Tetris game board and shape
         stdscr.addstr(0, 0, ' === SHELL TETRIS ===')
